@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+CALENDARS="Personal,GoodGym,Case Kit"
+
+URL=$(
+icalBuddy -ic $CALENDARS -sd eventsToday |\
+  ruby ./squash.rb |\
+  fzf |\
+  ruby ./extract.rb
+)
+
+if [[ ! -z "$URL" ]]
+then
+  open "$URL"
+fi
